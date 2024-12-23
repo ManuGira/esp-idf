@@ -40,7 +40,10 @@ PYTHON = sys.executable
 
 # note: os.environ changes don't automatically propagate to child processes,
 # you have to pass env=os.environ explicitly anywhere that we create a process
-os.environ['PYTHON'] = sys.executable
+### Emmanuel Girardin: I found this to fix to avoid backslash of windows paths to be interprete as escape character: https://github.com/espressif/esp-idf/issues/5512#issuecomment-651017737
+# os.environ['PYTHON'] = sys.executable
+import pathlib
+os.environ["PYTHON"] = pathlib.Path(sys.executable).as_posix()
 
 # Name of the program, normally 'idf.py'.
 # Can be overridden from idf.bat using IDF_PY_PROGRAM_NAME
